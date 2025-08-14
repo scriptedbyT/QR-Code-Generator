@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center text-purple-700">QR Code Generator</h1>
+
+    <form action="/generate" method="post" class="flex flex-col gap-4 mb-6">
+      <input 
+        type="url" 
+        name="url" 
+        required 
+        placeholder="Enter a URL..." 
+        class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400" />
+      <button 
+        type="submit" 
+        class="bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
+        Generate QR Code
+      </button>
+    </form>
+
+    {% if qr_code %}
+    <div class="text-center">
+      <p class="mb-2 font-medium">Preview:</p>
+      <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code Preview" class="mx-auto mb-4 w-40 h-40"/>
+
+      <form action="/download" method="post">
+        <input type="hidden" name="url" value="{{ url }}">
+        <button 
+          type="submit" 
+          class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+          Download QR Code
+        </button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
